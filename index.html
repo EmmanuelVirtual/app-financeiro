@@ -55,7 +55,9 @@
         <section id="transaction">
             <h2 class="sr-only">Transações</h2>
 
-            <a href="#" class="button new"> + Nova Transação</a>
+            <a href="#" 
+            onclick="Modal.open()"
+            class="button new"> + Nova Transação</a>
 
 
             <table id="data-table">
@@ -143,7 +145,10 @@
                     </div>
 
                     <div class="input-group actions">
-                        <a href="#" class="button cancel">Cancelar</a>
+                        <a 
+                        onclick="Modal.close()"
+                        href="#" 
+                        class="button cancel">Cancelar</a>
                         <button>Salvar</button>
                     </div>
                 </form>
@@ -151,13 +156,30 @@
         </div>
     </div>
 
-    <script>
-        
-    </script>
-
     <footer>
         <p>Aplicativo Financeiro Viana Tech</p>
     </footer>
+
+    <script>
+        const Modal = {
+            open () {
+                // Abrir Modal
+                //Adicionar a class active ao modal
+                document
+                    .querySelector('.modal-overlay')
+                    .classList
+                    .add('active')
+            },
+            close () {
+                // fechar modal
+                // remover a class active do modal
+                document
+                    .querySelector('.modal-overlay')
+                    .classList
+                    .remove('active')
+            }
+        }
+    </script>
 </body>
 
 </html>
