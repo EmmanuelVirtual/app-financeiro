@@ -26,17 +26,23 @@ const transactions = [
 },
     {
     id: 2,
-    description: 'Luz',
-    amount: -30000,
+    description: 'Website',
+    amount: 500000,
     date: '23/01/2021',
 },
     {
     id: 3,
-    description: 'Luz',
+    description: 'Água',
     amount: -20000,
     date: '23/01/2021',
+},
+    {
+    id: 4,
+    description: 'Internet',
+    amount: 200000,
+    date: '23/01/2021',
 }
-, {}, {}]
+]
 
 const Transaction = {
     incomes () {
@@ -51,19 +57,40 @@ const Transaction = {
 }
 
 const DOM = {
-    
-    innerHTMLTransaction() {
+    transactionsContainer: document.querySelector('#data-table tbody'),
 
-        const html = `
-        <tr>
-             <td class="description">Luz</td>
-             <td class="expense">- R$ 500,00</td>
-             <td class="date">23/01/2021</td>
+    addTransaction (transaction, index) {
+        const tr = document.createElement('tr')
+        tr.innerHTML = DOM.innerHTMLTransaction(transaction)
+
+        DOM.transactionsContainer.appendChild(tr)
+
+        
+    },
+    innerHTMLTransaction(transaction) {
+        const CSSclass = transaction.amount > 0 ? "income" : "expense"
+
+        const amount = Utils.formatCurrency(transaction.amount)
+
+        const html = 
+           `
+             <td class="description">${transaction.description}</td>
+             <td class="${CSSclass}">${transaction.amount}</td>
+             <td class="date">${transaction.date}</td>
              <td>
                 <img src="./assets/minus.svg" alt="Remover Transação">
              </td>
-        </tr>
-        `
-
+           `
+        return html
     }
 }
+
+const Utils = {
+    formatCurrency(value) {
+        const signal = Number(value) < 0 ? "-" : ""
+    }
+}
+
+transactions.forEach(function(transaction) {
+    DOM.addTransaction(transaction)
+})
