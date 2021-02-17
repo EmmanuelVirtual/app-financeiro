@@ -229,7 +229,7 @@ const App = {
         
     },
     reload() {
-        DOM.innerHTMLTransaction()
+        DOM.clearTransactions()
         App.init()
     },
 }
