@@ -17,68 +17,18 @@ const Modal = {
     }
 }
 
+const Storage = {
+    get () {
+        return JSON.parse(localStorage.getItem("dev.finances:transactions")) || []
+    },
+
+    set(transactions) {
+        localStorage.setItem("dev.finances:transactions", JSON.stringify(transactions))
+    }
+}
+
 const Transaction = {
-    all: [
-        {
-        
-        description: 'Luz',
-        amount: -50000,
-        date: '23/01/2021',
-    },
-        {
-        
-        description: 'Website',
-        amount: 500000,
-        date: '23/01/2021',
-    },
-        {
-        
-        description: 'Água',
-        amount: -20000,
-        date: '23/01/2021',
-    },
-        {
-        
-        description: 'App',
-        amount: 200000,
-        date: '23/01/2021',
-    }
-    ],
-
-    add(transaction){
-        Transaction.all.push(transaction)
-
-        App.reload()
-    },
-
-    remove(index) {
-        Transaction.all.splice(index, 1)
-
-        App.reload()
-    },
-
-    incomes () {
-        let income = 0;
-        Transaction.all.forEach(transaction => {
-            if(transaction.amount > 0) {
-                income += transaction.amount;
-            }
-        })
-        //somar as entradas
-        return income
-    },
-    expenses() {
-        let expense = 0;
-        Transaction.all.forEach(transaction => {
-            if(transaction.amount < 0) {
-                expense += transaction.amount;
-            }
-        })
-                return expense
-    },
-    total () {
-        return Transaction.incomes() + Transaction.expenses();
-    }
+    all: Storage.get(),
 }
 
 const DOM = {
@@ -222,10 +172,11 @@ const Form = {
 
 const App = {
     init() {
-
         Transaction.all.forEach(DOM.addTransaction)
         
         DOM.updateBalance()
+
+        Storage.set(Transaction.all)
         
     },
     reload() {
